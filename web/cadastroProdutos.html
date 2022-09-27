@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos - Cadastro</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <h3>Cadastrar produto</h3>
+    <div class="mt-2 mb-2">
+      <a href="./consultaProdutos.html" class="btn btn-primary" >Voltar</a>
+    </div>
+    <form id="formCadastroProduto">
+      <div class="mb-3">
+        <label for="inputNome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="inputNome">
+      </div>
+      <div class="mb-3">
+        <label for="inputDescricao" class="form-label">Descrição</label>
+        <input type="text" class="form-control" id="inputDescricao">
+      </div>
+      <div class="mb-3">
+        <label for="inputPreco" class="form-label">Preço</label>
+        <input type="number" class="form-control" id="inputPreco" step="any">
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script>
+    $("#formCadastroProduto").submit((event) => {
+      event.preventDefault();
+      const nome = $("#inputNome").val();
+      const descricao = $("#inputDescricao").val();
+      const preco = $("#inputPreco").val();
+
+      const _produto = {
+        title: nome,
+        description: descricao,
+        price: parseFloat(preco)
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/products',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        data: JSON.stringify(_produto),
+        success: function (response) {
+          window.location.href = "./consultaProdutos.html";
+        },
+        error: function (param) {
+          console.log(`Erro:${param}`);
+        }
+      });
+    })
+  </script>
+</body>
+
+</html>
